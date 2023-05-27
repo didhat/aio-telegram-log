@@ -1,6 +1,7 @@
 import asyncio
 import aiohttp
 import logging
+import datetime
 
 from typing import Optional, Final
 
@@ -34,17 +35,19 @@ class TelegramLoggingHandler(logging.Handler):
             self.session = session
 
     def emit(self, record: logging.LogRecord) -> None:
-        text = self.format(record)
-        loop = asyncio.get_running_loop()
-        loop.run_until_complete(self.send_message(text))
+        text = self.record2tg(record)
+
+        loop = asyncio.get_event_loop()
+        loop.create_task(self.send_message(text))
+
+    def record2tg(self, record: logging.LogRecord):
+        msg = self.format(record)
+        return f"{msg}\ntime: {datetime.datetime.fromtimestamp(record.created)} \nlevel: {record.levelname}\n"
 
     def format_url(self, method: str):
         return f"{self.telegram_url}/bot{self._token}/{method}"
 
     async def send_message(self, text: str):
-        if self.session is None:
-            logger.warning("can not send logs to telegram due to session is None")
-            return
         send = self.get_message_sender(text)
 
         await asyncio.gather(*[send(ch_id) for ch_id in self._chat_ids])
@@ -53,13 +56,21 @@ class TelegramLoggingHandler(logging.Handler):
         message = {"text": text}
 
         async def sender(chat_id: int):
+            if self.session is None:
+                logger.warning("can not send logs to telegram because session is None")
+
             message["chat_id"] = chat_id
             try:
-                async with self.session.post(
-                    self.format_url("sendMessage"), json=message
-                ) as resp:
-                    return await resp.json()
+                response = await self.send2telegram(message)
             except Exception as e:
                 logger.warning(f"can not send message to telegram: {e}")
+                return
+            return response
 
         return sender
+
+    async def send2telegram(self, message: dict):
+        async with self.session.post(
+            self.format_url("sendMessage"), json=message
+        ) as resp:
+            return resp
