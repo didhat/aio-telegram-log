@@ -26,6 +26,6 @@ async def test_emit_handler(mocked_handler):
     assert len(messages) == 2
     assert messages[0]["chat_id"] in (1, 2)
     assert messages[1]["chat_id"] in (1, 2)
-    right_message = "test_log\ntime: 2023-05-28 09:13:11 \nlevel: DEBUG\n"
+    right_message = "test_log\ntime(utc): 2023-05-28 06:13:11 \nlevel: DEBUG\n"
     assert messages[0]["text"] == right_message
     assert messages[1]["text"] == right_message
