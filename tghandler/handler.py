@@ -34,7 +34,7 @@ class TelegramLoggingHandler(logging.Handler):
 
     def record2tg(self, record: logging.LogRecord):
         msg = self.format(record)
-        return f"{msg}\ntime: {datetime.datetime.fromtimestamp(record.created)} \nlevel: {record.levelname}\n"
+        return f"{msg}\ntime(utc): {datetime.datetime.utcfromtimestamp(record.created)} \nlevel: {record.levelname}\n"
 
     def format_url(self, method: str):
         return f"{self.telegram_url}/bot{self._token}/{method}"
