@@ -26,7 +26,6 @@ class TelegramLoggingHandler(logging.Handler):
 
         self.lock = None  # for sending message we do not need lock
         self.session = session
-        # self.set_session(session)
 
     def emit(self, record: logging.LogRecord) -> None:
         text = self.record2tg(record)
