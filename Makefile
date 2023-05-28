@@ -1,3 +1,3 @@
 
 test:
-	pytest tests
+	pytest
