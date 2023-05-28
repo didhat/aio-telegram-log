@@ -25,14 +25,8 @@ class TelegramLoggingHandler(logging.Handler):
         self._chat_ids = chat_ids
 
         self.lock = None  # for sending message we do not need lock
-        self.session = None
-        self.set_session(session)
-
-    def set_session(self, session: Optional[aiohttp.ClientSession]):
-        if session is None:
-            self.session = aiohttp.ClientSession()
-        else:
-            self.session = session
+        self.session = session
+        # self.set_session(session)
 
     def emit(self, record: logging.LogRecord) -> None:
         text = self.record2tg(record)
@@ -48,9 +42,15 @@ class TelegramLoggingHandler(logging.Handler):
         return f"{self.telegram_url}/bot{self._token}/{method}"
 
     async def send_message(self, text: str):
+        if self.session is None:
+            await self.set_session()
+
         send = self.get_message_sender(text)
 
         await asyncio.gather(*[send(ch_id) for ch_id in self._chat_ids])
+
+    async def set_session(self):
+        self.session = aiohttp.ClientSession()
 
     def get_message_sender(self, text: str):
         message = {"text": text}
