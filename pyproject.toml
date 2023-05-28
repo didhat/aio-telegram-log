@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 version="1.0.0"
-readme="README.md"
 name = "aio_telegram_log_handler"
+readme = "README.md"
 authors = [
     {name = "Daniil Solynin", email = "solynynd@gmail.com"},
 ]
