@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name="aio-telegram_log_handler",
+    name="aio_telegram_log_handler",
     version="1.0.0",
     author="Daniil Solynin",
     author_email="solynynd@gmail.com",
