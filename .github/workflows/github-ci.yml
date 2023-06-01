@@ -73,6 +73,8 @@ jobs:
         with:
           name: archive
           path: artefacts
+      - name: ddd
+        run: ls artefacts
       - name: Send artefacts to telegram
         uses: appleboy/telegram-action@master
         with:
