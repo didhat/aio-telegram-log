@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="aio_telegram_log_handler",
-    version="1.0.0",
+    version="1.0.1",
     author="Daniil Solynin",
     author_email="solynynd@gmail.com",
     description="Package for send some important logs directly to telegram",
