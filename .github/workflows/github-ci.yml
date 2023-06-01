@@ -60,5 +60,8 @@ jobs:
         run: |
           mkdir -p artefacts
           python3 -m build --outdir artefacts/  
-      
+      - uses: actions/Upload-artifact@v3
+        with:
+          name: archive
+          path: artefacts/*.gz
 
