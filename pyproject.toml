@@ -29,7 +29,8 @@ test = [
 ]
 
 linters = [
-    "isort"
+    "isort",
+    "mypy"
 ]
 
 
