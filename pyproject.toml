@@ -28,7 +28,18 @@ test = [
     "pytest-asyncio>=0.21"
 ]
 
+linters = [
+    "isort",
+    "mypy",
+    "black"
+]
+
+
 [tool.pytest.ini_options]
 minversion="7.0"
 testpaths=["tests"]
 asyncio_mode="auto"
+
+[[tool.mypy.overrides]]
+module="aiohttp.*"
+ignore_missing_imports = true

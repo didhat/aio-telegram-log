@@ -1,3 +1,1 @@
 from tghandler.handler import TelegramLoggingHandler
-
-assert TelegramLoggingHandler

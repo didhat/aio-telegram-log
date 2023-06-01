@@ -1,7 +1,7 @@
 import asyncio
 import datetime
 import logging
-from typing import Optional, Final
+from typing import Final, Optional, Union
 
 import aiohttp
 
@@ -51,7 +51,7 @@ class TelegramLoggingHandler(logging.Handler):
         self.session = aiohttp.ClientSession()
 
     def get_message_sender(self, text: str):
-        message = {"text": text}
+        message: dict[str, Union[str, int]] = {"text": text}
 
         async def sender(chat_id: int):
             if self.session is None:
@@ -68,6 +68,8 @@ class TelegramLoggingHandler(logging.Handler):
         return sender
 
     async def send2telegram(self, message: dict):
+        if self.session is None:
+            return None
         async with self.session.post(
             self.format_url("sendMessage"), json=message
         ) as resp:
