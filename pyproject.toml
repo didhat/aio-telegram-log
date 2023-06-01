@@ -30,7 +30,8 @@ test = [
 
 linters = [
     "isort",
-    "mypy"
+    "mypy",
+    "black"
 ]
 
 
