@@ -28,6 +28,11 @@ test = [
     "pytest-asyncio>=0.21"
 ]
 
+linters = [
+    "isort"
+]
+
+
 [tool.pytest.ini_options]
 minversion="7.0"
 testpaths=["tests"]

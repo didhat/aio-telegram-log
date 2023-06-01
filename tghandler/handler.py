@@ -1,7 +1,7 @@
 import asyncio
 import datetime
 import logging
-from typing import Optional, Final
+from typing import Final, Optional
 
 import aiohttp
 

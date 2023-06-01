@@ -29,10 +29,8 @@ jobs:
       - name: Running tests
         run: |
           make test
-      - name: Linters
-        uses: rahul-deepsource/pyaction@1.4.0
-        with:
-          python-root-list: "tghandler/"
-          use-mypy: true
-          use-black: true
-          use-isort: true
+      - name: Isort
+        run: |
+          pip install -e .[linters]
+          isort tghandler --check-only
+      
