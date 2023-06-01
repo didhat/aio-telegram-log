@@ -1,6 +1,6 @@
 name: Checks
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   test:
@@ -69,6 +69,10 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: archive
+          path: artefacts
       - name: Send artefacts to telegram
         uses: actions/Upload-artifact@v3
         with:
