@@ -3,7 +3,7 @@ name: Checks
 on: [push]
 
 jobs:
-  tests:
+  build:
 
     runs-on: ubuntu-latest
     strategy:
