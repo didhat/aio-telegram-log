@@ -26,11 +26,13 @@ jobs:
         run: | 
           python -m pip install --upgrade pip
           pip install -e .[test]
+          pip install -e .[linters]
       - name: Running tests
         run: |
           make test
       - name: Isort
         run: |
-          pip install -e .[linters]
           isort tghandler --check-only
-      
+      - name: Mypy
+        run: |
+          mypy tghandler/
