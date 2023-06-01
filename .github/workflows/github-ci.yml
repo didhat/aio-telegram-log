@@ -63,7 +63,7 @@ jobs:
       - uses: actions/Upload-artifact@v3
         with:
           name: archive
-          path: artefacts/*.gz
+          path: artefacts
 
   send:
     needs: build
