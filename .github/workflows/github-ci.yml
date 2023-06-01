@@ -1,9 +1,9 @@
 name: Checks
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
     strategy:
@@ -39,3 +39,29 @@ jobs:
       - name: Black
         run: |
           black tghandler/ --check
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Display version
+        run: |
+          python -c "import sys; print(sys.version)"
+      - name: Install depends
+        run: python3 -m pip install --upgrade build
+      - name: Build archive
+        run: |
+          mkdir -p artefacts
+          python3 -m build --outdir artefacts/  
+      - uses: actions/Upload-artifact@v3
+        with:
+          name: archive
+          path: artefacts/*.gz
+
